@@ -1,7 +1,7 @@
 =begin
-#validateapi
+#currencyapi
 
-#The validation APIs help you validate data. Check if an E-mail address is real. Check if a domain is real. Check up on an IP address, and even where it is located. All this and much more is available in the validation API.
+#The currency APIs help you retrieve exchange rates and convert prices between currencies easily.
 
 OpenAPI spec version: v1
 
@@ -12,51 +12,51 @@ Swagger Codegen version: 2.4.14
 
 require 'spec_helper'
 
-describe CloudmersiveValidateApiClient::ApiClient do
+describe CloudmersiveCurrencyApiClient::ApiClient do
   context 'initialization' do
     context 'URL stuff' do
       context 'host' do
         it 'removes http from host' do
-          CloudmersiveValidateApiClient.configure { |c| c.host = 'http://example.com' }
-          expect(CloudmersiveValidateApiClient::Configuration.default.host).to eq('example.com')
+          CloudmersiveCurrencyApiClient.configure { |c| c.host = 'http://example.com' }
+          expect(CloudmersiveCurrencyApiClient::Configuration.default.host).to eq('example.com')
         end
 
         it 'removes https from host' do
-          CloudmersiveValidateApiClient.configure { |c| c.host = 'https://wookiee.com' }
-          expect(CloudmersiveValidateApiClient::ApiClient.default.config.host).to eq('wookiee.com')
+          CloudmersiveCurrencyApiClient.configure { |c| c.host = 'https://wookiee.com' }
+          expect(CloudmersiveCurrencyApiClient::ApiClient.default.config.host).to eq('wookiee.com')
         end
 
         it 'removes trailing path from host' do
-          CloudmersiveValidateApiClient.configure { |c| c.host = 'hobo.com/v4' }
-          expect(CloudmersiveValidateApiClient::Configuration.default.host).to eq('hobo.com')
+          CloudmersiveCurrencyApiClient.configure { |c| c.host = 'hobo.com/v4' }
+          expect(CloudmersiveCurrencyApiClient::Configuration.default.host).to eq('hobo.com')
         end
       end
 
       context 'base_path' do
         it "prepends a slash to base_path" do
-          CloudmersiveValidateApiClient.configure { |c| c.base_path = 'v4/dog' }
-          expect(CloudmersiveValidateApiClient::Configuration.default.base_path).to eq('/v4/dog')
+          CloudmersiveCurrencyApiClient.configure { |c| c.base_path = 'v4/dog' }
+          expect(CloudmersiveCurrencyApiClient::Configuration.default.base_path).to eq('/v4/dog')
         end
 
         it "doesn't prepend a slash if one is already there" do
-          CloudmersiveValidateApiClient.configure { |c| c.base_path = '/v4/dog' }
-          expect(CloudmersiveValidateApiClient::Configuration.default.base_path).to eq('/v4/dog')
+          CloudmersiveCurrencyApiClient.configure { |c| c.base_path = '/v4/dog' }
+          expect(CloudmersiveCurrencyApiClient::Configuration.default.base_path).to eq('/v4/dog')
         end
 
         it "ends up as a blank string if nil" do
-          CloudmersiveValidateApiClient.configure { |c| c.base_path = nil }
-          expect(CloudmersiveValidateApiClient::Configuration.default.base_path).to eq('')
+          CloudmersiveCurrencyApiClient.configure { |c| c.base_path = nil }
+          expect(CloudmersiveCurrencyApiClient::Configuration.default.base_path).to eq('')
         end
       end
     end
   end
 
   describe 'params_encoding in #build_request' do
-    let(:config) { CloudmersiveValidateApiClient::Configuration.new }
-    let(:api_client) { CloudmersiveValidateApiClient::ApiClient.new(config) }
+    let(:config) { CloudmersiveCurrencyApiClient::Configuration.new }
+    let(:api_client) { CloudmersiveCurrencyApiClient::ApiClient.new(config) }
 
     it 'defaults to nil' do
-      expect(CloudmersiveValidateApiClient::Configuration.default.params_encoding).to eq(nil)
+      expect(CloudmersiveCurrencyApiClient::Configuration.default.params_encoding).to eq(nil)
       expect(config.params_encoding).to eq(nil)
 
       request = api_client.build_request(:get, '/test')
@@ -71,11 +71,11 @@ describe CloudmersiveValidateApiClient::ApiClient do
   end
 
   describe 'timeout in #build_request' do
-    let(:config) { CloudmersiveValidateApiClient::Configuration.new }
-    let(:api_client) { CloudmersiveValidateApiClient::ApiClient.new(config) }
+    let(:config) { CloudmersiveCurrencyApiClient::Configuration.new }
+    let(:api_client) { CloudmersiveCurrencyApiClient::ApiClient.new(config) }
 
     it 'defaults to 0' do
-      expect(CloudmersiveValidateApiClient::Configuration.default.timeout).to eq(0)
+      expect(CloudmersiveCurrencyApiClient::Configuration.default.timeout).to eq(0)
       expect(config.timeout).to eq(0)
 
       request = api_client.build_request(:get, '/test')
@@ -90,8 +90,8 @@ describe CloudmersiveValidateApiClient::ApiClient do
   end
 
   describe '#build_request' do
-    let(:config) { CloudmersiveValidateApiClient::Configuration.new }
-    let(:api_client) { CloudmersiveValidateApiClient::ApiClient.new(config) }
+    let(:config) { CloudmersiveCurrencyApiClient::Configuration.new }
+    let(:api_client) { CloudmersiveCurrencyApiClient::ApiClient.new(config) }
 
     it 'does not send multipart to request' do
       expect(Typhoeus::Request).to receive(:new).with(anything, hash_not_including(:multipart))
@@ -108,7 +108,7 @@ describe CloudmersiveValidateApiClient::ApiClient do
 
   describe '#deserialize' do
     it "handles Array<Integer>" do
-      api_client = CloudmersiveValidateApiClient::ApiClient.new
+      api_client = CloudmersiveCurrencyApiClient::ApiClient.new
       headers = { 'Content-Type' => 'application/json' }
       response = double('response', headers: headers, body: '[12, 34]')
       data = api_client.deserialize(response, 'Array<Integer>')
@@ -117,7 +117,7 @@ describe CloudmersiveValidateApiClient::ApiClient do
     end
 
     it 'handles Array<Array<Integer>>' do
-      api_client = CloudmersiveValidateApiClient::ApiClient.new
+      api_client = CloudmersiveCurrencyApiClient::ApiClient.new
       headers = { 'Content-Type' => 'application/json' }
       response = double('response', headers: headers, body: '[[12, 34], [56]]')
       data = api_client.deserialize(response, 'Array<Array<Integer>>')
@@ -126,7 +126,7 @@ describe CloudmersiveValidateApiClient::ApiClient do
     end
 
     it 'handles Hash<String, String>' do
-      api_client = CloudmersiveValidateApiClient::ApiClient.new
+      api_client = CloudmersiveCurrencyApiClient::ApiClient.new
       headers = { 'Content-Type' => 'application/json' }
       response = double('response', headers: headers, body: '{"message": "Hello"}')
       data = api_client.deserialize(response, 'Hash<String, String>')
@@ -138,8 +138,8 @@ describe CloudmersiveValidateApiClient::ApiClient do
   describe "#object_to_hash" do
     it 'ignores nils and includes empty arrays' do
       # uncomment below to test object_to_hash for model
-      # api_client = CloudmersiveValidateApiClient::ApiClient.new
-      # _model = CloudmersiveValidateApiClient::ModelName.new
+      # api_client = CloudmersiveCurrencyApiClient::ApiClient.new
+      # _model = CloudmersiveCurrencyApiClient::ModelName.new
       # update the model attribute below
       # _model.id = 1
       # update the expected value (hash) below
@@ -150,7 +150,7 @@ describe CloudmersiveValidateApiClient::ApiClient do
 
   describe '#build_collection_param' do
     let(:param) { ['aa', 'bb', 'cc'] }
-    let(:api_client) { CloudmersiveValidateApiClient::ApiClient.new }
+    let(:api_client) { CloudmersiveCurrencyApiClient::ApiClient.new }
 
     it 'works for csv' do
       expect(api_client.build_collection_param(param, :csv)).to eq('aa,bb,cc')
@@ -178,7 +178,7 @@ describe CloudmersiveValidateApiClient::ApiClient do
   end
 
   describe '#json_mime?' do
-    let(:api_client) { CloudmersiveValidateApiClient::ApiClient.new }
+    let(:api_client) { CloudmersiveCurrencyApiClient::ApiClient.new }
 
     it 'works' do
       expect(api_client.json_mime?(nil)).to eq false
@@ -195,7 +195,7 @@ describe CloudmersiveValidateApiClient::ApiClient do
   end
 
   describe '#select_header_accept' do
-    let(:api_client) { CloudmersiveValidateApiClient::ApiClient.new }
+    let(:api_client) { CloudmersiveCurrencyApiClient::ApiClient.new }
 
     it 'works' do
       expect(api_client.select_header_accept(nil)).to be_nil
@@ -211,7 +211,7 @@ describe CloudmersiveValidateApiClient::ApiClient do
   end
 
   describe '#select_header_content_type' do
-    let(:api_client) { CloudmersiveValidateApiClient::ApiClient.new }
+    let(:api_client) { CloudmersiveCurrencyApiClient::ApiClient.new }
 
     it 'works' do
       expect(api_client.select_header_content_type(nil)).to eq('application/json')
@@ -226,7 +226,7 @@ describe CloudmersiveValidateApiClient::ApiClient do
   end
 
   describe '#sanitize_filename' do
-    let(:api_client) { CloudmersiveValidateApiClient::ApiClient.new }
+    let(:api_client) { CloudmersiveCurrencyApiClient::ApiClient.new }
 
     it 'works' do
       expect(api_client.sanitize_filename('sun')).to eq('sun')

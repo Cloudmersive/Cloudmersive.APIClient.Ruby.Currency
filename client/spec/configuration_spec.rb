@@ -1,7 +1,7 @@
 =begin
-#validateapi
+#currencyapi
 
-#The validation APIs help you validate data. Check if an E-mail address is real. Check if a domain is real. Check up on an IP address, and even where it is located. All this and much more is available in the validation API.
+#The currency APIs help you retrieve exchange rates and convert prices between currencies easily.
 
 OpenAPI spec version: v1
 
@@ -12,14 +12,14 @@ Swagger Codegen version: 2.4.14
 
 require 'spec_helper'
 
-describe CloudmersiveValidateApiClient::Configuration do
-  let(:config) { CloudmersiveValidateApiClient::Configuration.default }
+describe CloudmersiveCurrencyApiClient::Configuration do
+  let(:config) { CloudmersiveCurrencyApiClient::Configuration.default }
 
   before(:each) do
     # uncomment below to setup host and base_path
     # require 'URI'
     # uri = URI.parse("https://api.cloudmersive.com")
-    # CloudmersiveValidateApiClient.configure do |c|
+    # CloudmersiveCurrencyApiClient.configure do |c|
     #   c.host = uri.host
     #   c.base_path = uri.path
     # end
